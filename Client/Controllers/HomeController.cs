@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Client.Models;
+using Client.Utils;
 
 namespace Client.Controllers
 {
@@ -20,11 +21,14 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-            this._logger.LogWarning("first Run!");
-            base.ViewBag.Students = new List<string>()
-            {
-                "AAA", "BBB", "CCC"
-            };
+//            this._logger.LogWarning("first Run!");
+//            base.ViewBag.Students = new List<string>()
+//            {
+//                "AAA", "BBB", "CCC"
+//            };
+            string url = "http://localhost:22222/api/students";
+            string content = WebAPIHelper.InvokeAPI(url);
+            base.ViewBag.Students = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(content);
             return View();
         }
 

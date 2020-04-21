@@ -1,0 +1,4 @@
+2020-04-21 12:13:43,996 [1] INFO  Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2020-04-21 12:13:44,021 [1] INFO  Microsoft.Hosting.Lifetime - Hosting environment: Development
+2020-04-21 12:13:44,027 [1] INFO  Microsoft.Hosting.Lifetime - Content root path: C:\Users\sickfox\Source\Repos\MicroServiceDemo\API
+2020-04-21 12:14:05,556 [7] WARN  API.Controllers.StudentsController - this is getall

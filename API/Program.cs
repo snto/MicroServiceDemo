@@ -18,6 +18,12 @@ namespace API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((context, loggingBuilder) =>
+                {
+                    loggingBuilder.AddFilter("Microsoft", LogLevel.Warning);
+                    loggingBuilder.AddFilter("System", LogLevel.Warning);
+                    loggingBuilder.AddLog4Net();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

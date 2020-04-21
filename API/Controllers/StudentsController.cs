@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
@@ -11,6 +12,13 @@ namespace API.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
+        private readonly ILogger<StudentsController> _logger;
+
+        public StudentsController(ILogger<StudentsController> logger)
+        {
+            _logger = logger;
+        }
+
         private List<string> _StudentList = new List<string>()
         {
             "AAA", "BBB", "CCC"
@@ -20,6 +28,7 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            this._logger.LogWarning("this is getall");
             return this._StudentList;
         }
 
