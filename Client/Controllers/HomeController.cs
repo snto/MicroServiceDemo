@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Client.Models;
 using Client.Utils;
+using Consul;
 
 namespace Client.Controllers
 {
@@ -21,12 +22,28 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-//            this._logger.LogWarning("first Run!");
+            this._logger.LogWarning("first Run!");
+            using (ConsulClient client = new ConsulClient(c =>
+            {
+                c.Address = new Uri("http://localhost:8500/");
+                c.Datacenter = "dc1";
+            }))
+            {
+                var dictionary = client.Agent.Services().Result.Response;
+                foreach (var keyValuePair in dictionary)
+                {
+                    AgentService agentService = keyValuePair.Value;
+                    this._logger.LogWarning($"{agentService.Address}:{agentService.Port} {agentService.ID} {agentService.Service}");
+
+                }
+            }
 //            base.ViewBag.Students = new List<string>()
 //            {
 //                "AAA", "BBB", "CCC"
 //            };
-            string url = "http://localhost:22222/api/students";
+            string url = "http://localhost:22221/api/students";
+//            string url = "http://localhost:22221/api/students";
+//            string url = "http://localhost:22221/api/students";
             string content = WebAPIHelper.InvokeAPI(url);
             base.ViewBag.Students = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(content);
             return View();
